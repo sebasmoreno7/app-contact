@@ -45,12 +45,14 @@ Para el caso puntual se usó Postman
 Headers: "Accept", "application/json"
 
 
-Para las consultas se tienen desde el ORM
+Para las consultas se tienen desde el ORM:
+
 @contacts = Contact
       .joins(:gender, :country, :department, :city)
       .select("contacts.*, genders.name as gender_name, countries.name as country_name, departments.name as department_name, cities.name as city_name")
 
-Para consultas desde MySql
+Para consultas desde MySql:
+
 SELECT 
   contacts.*,
   genders.name AS gender_name,
