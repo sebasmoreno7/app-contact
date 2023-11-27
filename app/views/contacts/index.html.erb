@@ -1,0 +1,50 @@
+<h1>Listado de contactos</h1>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Fecha de nacimiento</th>
+      <th>País</th>
+      <th>Departamento</th>
+      <th>Ciudad</th>
+      <th>Email</th>
+      <th>Dirección</th>
+      <th>Casa/apartamento</th>
+      <th>Descripción</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contacts.group_by(&:city).each do |city, contacts| %>
+      <tr>
+        <td colspan="11"><strong><%= "Total en #{city.name}: #{contacts.count}" %></strong></td>
+      </tr>
+      <% contacts.each do |contact| %>
+        <tr>
+          <td><%= contact.id %></td>
+          <td><%= contact.name %></td>
+          <td><%= contact.lastname %></td>
+          <td><%= contact.birth_date %></td>
+          <td><%= contact.country.name %></td>
+          <td><%= contact.department.name %></td>
+          <td><%= contact.city.name %></td>
+          <td><%= contact.email %></td>
+          <td><%= contact.address %></td>
+          <td><%= contact.house %></td>
+          <td><%= contact.description %></td>
+          <td>
+            <%= link_to 'Editar', edit_contact_path(contact), class: 'btn btn-warning btn-sm' %>
+            <%= link_to 'Eliminar', contact, method: :delete, data: { confirm: '¿Estás seguro?' }, class: 'btn btn-danger btn-sm' %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Agregar Nuevo Contacto', new_contact_path, class: 'btn btn-success' %>
+
+<%= link_to 'Exportar a PDF', export_to_pdf_contacts_path(format: :pdf), class: 'btn btn-primary', target: '_blank' %>

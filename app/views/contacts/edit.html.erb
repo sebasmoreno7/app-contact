@@ -1,0 +1,80 @@
+<h1>Editar contacto</h1>
+
+<%= form_for(@contact) do |f| %>
+  <div class="row">
+    <div class="col-md-12">
+      <% if @contact.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger alert-dismissable" role="alert">
+            <h2>
+              <%= pluralize(@contact.errors.count, "error") %> prohibited this @contact from being saved:
+            </h2>
+
+            <ul>
+              <% @contact.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :lastname %>
+    <%= f.text_field :lastname, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :birth_date %>
+    <%= f.date_field :birth_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :gender_id %>
+    <%= f.select :gender_id, Gender.all.map { |gender| [gender.name, gender.id] }, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :country_id %>
+    <%= f.select :country_id, Country.all.map { |country| [country.name, country.id] }, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :department_id %>
+    <%= f.select :department_id, Department.all.map { |department| [department.name, department.id] }, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :city_id %>
+    <%= f.select :city_id, City.all.map { |city| [city.name, city.id] }, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address %>
+    <%= f.text_area :address, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :house %>
+    <%= f.text_field :house, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Actualizar contacto", class: "btn btn-primary" %>
+<% end %>

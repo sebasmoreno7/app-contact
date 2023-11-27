@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
   # Defines the root path route ("/")
-  # root "articles#index"
+  root to: 'contacts#index'
+  resources :contacts do
+    get 'export_to_pdf', on: :collection, defaults: { format: 'pdf' }
+  end
+  
+  
 end
