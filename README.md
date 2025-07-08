@@ -30,6 +30,7 @@ bash
 
 rails db:create
 rails db:migrate
+rails db:seed
 
 Inicia el servidor:
 
@@ -59,13 +60,22 @@ SELECT
   countries.name AS country_name,
   departments.name AS department_name,
   cities.name AS city_name
-FROM 
+FROM
   contacts
-JOIN 
+JOIN
   genders ON contacts.gender_id = genders.id
-JOIN 
+JOIN
   countries ON contacts.country_id = countries.id
-JOIN 
+JOIN
   departments ON contacts.department_id = departments.id
-JOIN 
+JOIN
   cities ON contacts.city_id = cities.id;
+
+## Flujo de trabajo con ramas
+
+El repositorio cuenta con dos ramas principales:
+
+* `work`: rama de desarrollo donde se integran las nuevas funcionalidades.
+* `main`: rama estable que refleja el código listo para producción.
+
+Se recomienda crear ramas de características a partir de `work` y, una vez revisadas, fusionarlas en `work`. Periódicamente, los cambios comprobados se incorporan a `main`.
