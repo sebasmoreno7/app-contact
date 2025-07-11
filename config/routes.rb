@@ -5,5 +5,4 @@ Rails.application.routes.draw do
     get 'export_to_pdf', on: :collection, defaults: { format: 'pdf' }
   end
   
-  
-end
+  end

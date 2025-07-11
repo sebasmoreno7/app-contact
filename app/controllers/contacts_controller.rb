@@ -1,4 +1,6 @@
 class ContactsController < ApplicationController
+    before_action :set_contact, only: %i[show edit update destroy]
+
     # Muestra la lista de contactos con información relacionada (género, país, departamento, ciudad)
     def index
       @contacts = Contact.includes(:gender, :country, :department, :city).all
@@ -11,7 +13,6 @@ class ContactsController < ApplicationController
   
     # Muestra los detalles de un contacto específico
     def show
-      @contact = Contact.find(params[:id])
     end
   
     # Muestra el formulario para crear un nuevo contacto
@@ -36,13 +37,10 @@ class ContactsController < ApplicationController
   
     # Muestra el formulario para editar un contacto existente
     def edit
-      @contact = Contact.find(params[:id])
     end
   
     # Actualiza la información de un contacto con los parámetros proporcionados
     def update
-      @contact = Contact.find(params[:id])
-  
       respond_to do |format|
         if @contact.update(contact_params)
           format.html { redirect_to contacts_path, notice: "Contact updated successfully" }
@@ -56,8 +54,6 @@ class ContactsController < ApplicationController
   
     # Elimina un contacto existente
     def destroy
-      @contact = Contact.find(params[:id])
-  
       @contact.destroy
       redirect_to contacts_path, notice: 'Contact deleted successfully'
     end
@@ -94,6 +90,10 @@ class ContactsController < ApplicationController
     end
   
     private
+
+    def set_contact
+      @contact = Contact.find(params[:id])
+    end
   
     # Parámetros permitidos para la creación y actualización de un contacto
     def contact_params
@@ -102,5 +102,4 @@ class ContactsController < ApplicationController
         :lastname, :email, :address, :house, :description
       )
     end
-end
-  
+end  
