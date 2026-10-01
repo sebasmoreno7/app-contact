@@ -1,81 +1,15 @@
-# README
+# App Contact · Rails contact manager
 
-Esta es una aplicación simple de contactos desarrollada en Ruby on Rails.
-Requisitos Previos
+Ruby on Rails application for managing contacts and their associated gender, country, department and city records. The `ContactsController` contains HTML CRUD actions, JSON responses for the contact list and create/update actions, and a PDF export action backed by Prawn. The root route points to the contact list.
 
-Asegúrate de tener instalado:
+## Stack
 
-    Ruby (versión 3.0.0 recomendada)
-    Rails (versión 7.0.0 recomendada)
-    SQLite (o la base de datos de tu elección)
+The Gemfile declares Ruby 3.0.0, Rails 7.0.5, SQLite and MySQL dependencies, Prawn and Bootstrap. Check `config/database.yml` for the database configuration in your environment. This repository is an older project; no production deployment is claimed.
 
-Configuración
+## Run locally
 
-    Clona el repositorio:
+1. Install the Ruby version declared in the Gemfile, Bundler and the database required by your configuration.
+2. Run `bundle install` and `bin/rails db:prepare`.
+3. Start the app with `bin/rails server` and visit `http://localhost:3000`.
 
-    bash
-
-git clone https://tu-repositorio.git
-cd contact-app
-
-Instala las gemas:
-
-bash
-
-bundle install
-
-Configura la base de datos:
-
-bash
-
-rails db:create
-rails db:migrate
-rails db:seed
-
-Inicia el servidor:
-
-bash
-
-rails server
-
-La aplicación estará disponible en http://localhost:3000.
-
-Se tiene el siguiente endpoint para traer los contactos creados:
-GET  http://localhost:3000/contacts
-Para el caso puntual se usó Postman
-Headers: "Accept", "application/json"
-
-
-Para las consultas se tienen desde el ORM:
-
-@contacts = Contact
-      .joins(:gender, :country, :department, :city)
-      .select("contacts.*, genders.name as gender_name, countries.name as country_name, departments.name as department_name, cities.name as city_name")
-
-Para consultas desde MySql:
-
-SELECT 
-  contacts.*,
-  genders.name AS gender_name,
-  countries.name AS country_name,
-  departments.name AS department_name,
-  cities.name AS city_name
-FROM
-  contacts
-JOIN
-  genders ON contacts.gender_id = genders.id
-JOIN
-  countries ON contacts.country_id = countries.id
-JOIN
-  departments ON contacts.department_id = departments.id
-JOIN
-  cities ON contacts.city_id = cities.id;
-
-## Flujo de trabajo con ramas
-
-El repositorio cuenta con dos ramas principales:
-
-* `work`: rama de desarrollo donde se integran las nuevas funcionalidades.
-* `main`: rama estable que refleja el código listo para producción.
-
-Se recomienda crear ramas de características a partir de `work` y, una vez revisadas, fusionarlas en `work`. Periódicamente, los cambios comprobados se incorporan a `main`.
+The routes include `GET /contacts` and `GET /contacts/export_to_pdf`. The setup and tests have not been revalidated on current systems.
