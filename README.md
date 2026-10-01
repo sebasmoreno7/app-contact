@@ -1,15 +1,19 @@
 # App Contact · Rails contact manager
 
-Ruby on Rails application for managing contacts and their associated gender, country, department and city records. The `ContactsController` contains HTML CRUD actions, JSON responses for the contact list and create/update actions, and a PDF export action backed by Prawn. The root route points to the contact list.
+This app manages contact details and exports them as PDF. It contains personal data and is not confirmed to have a live deployment.
 
-## Stack
+## Local development
 
-The Gemfile declares Ruby 3.0.0, Rails 7.0.5, SQLite and MySQL dependencies, Prawn and Bootstrap. Check `config/database.yml` for the database configuration in your environment. This repository is an older project; no production deployment is claimed.
+- Ruby 3.4.2, Bundler, and SQLite
+- Rails 8.1.4, Propshaft, and Importmap
+- `bundle install`
+- `RAILS_ENV=test bin/rails db:prepare && bin/rails test`
+- `bin/rails db:prepare && bin/rails server`
 
-## Run locally
+The obsolete unused `mysql2`, Bootstrap gem and Sass compiler dependencies were removed. The app's local CSS remains. GitHub Actions checks tests, asset compilation, and Ruby advisories.
 
-1. Install the Ruby version declared in the Gemfile, Bundler and the database required by your configuration.
-2. Run `bundle install` and `bin/rails db:prepare`.
-3. Start the app with `bin/rails server` and visit `http://localhost:3000`.
+## Production access and deployment review
 
-The routes include `GET /contacts` and `GET /contacts/export_to_pdf`. The setup and tests have not been revalidated on current systems.
+Production requires `CONTACT_HTTP_USER` and `CONTACT_HTTP_PASSWORD`. All contact endpoints deny access when either value is absent; protect these values in the hosting provider and never commit them. Production forces HTTPS and responses set `Cache-Control: no-store`. HTTP Basic is a single-operator gate, not per-user authorization; review the access model before exposing real contact data.
+
+The production database remains SQLite on local disk, and uploaded files also use local disk. Both are lost on ephemeral hosting. **Do not deploy this app with real data to a free ephemeral service.** Choose and verify durable storage, backup and migration before deployment. No live database or provider was changed here. Keep a backup and rollback plan before any version switch. A clean gem advisory check does not prove the app is fully secure.

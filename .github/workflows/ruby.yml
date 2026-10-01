@@ -1,0 +1,21 @@
+name: Ruby checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+      - run: bundle install --jobs 4 --retry 3
+      - run: RAILS_ENV=test bundle exec rails db:prepare
+      - run: bundle exec rails test
+      - run: SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bundle exec rails assets:precompile
+      - run: gem install bundler-audit --no-document
+      - run: bundle-audit update
+      - run: bundle-audit check
