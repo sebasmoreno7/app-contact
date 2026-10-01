@@ -29,7 +29,7 @@ class ContactsController < ApplicationController
           format.html { redirect_to contacts_path, notice: "Contact created successfully" }
           format.json { render json: @contact, status: :created, location: @contact }
         else
-          format.html { render :new }
+          format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @contact.errors, status: :unprocessable_entity }
         end
       end
@@ -44,9 +44,9 @@ class ContactsController < ApplicationController
       respond_to do |format|
         if @contact.update(contact_params)
           format.html { redirect_to contacts_path, notice: "Contact updated successfully" }
-          format.json { render json: @contact, status: :created, location: @contact }
+          format.json { render json: @contact, status: :ok, location: @contact }
         else
-          format.html { render :edit }
+          format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @contact.errors, status: :unprocessable_entity }
         end
       end
