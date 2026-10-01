@@ -7,6 +7,12 @@ class ContactAccessTest < ActionDispatch::IntegrationTest
         get contacts_path
         assert_response :unauthorized
         assert_equal "no-store", response.headers["Cache-Control"]
+
+        get contacts_path(format: :json)
+        assert_response :unauthorized
+
+        get export_to_pdf_contacts_path
+        assert_response :unauthorized
       end
     end
 
@@ -21,6 +27,11 @@ class ContactAccessTest < ActionDispatch::IntegrationTest
         assert_response :unauthorized
 
         get contacts_path, headers: {
+          "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials("operator", "secret")
+        }
+        assert_response :success
+
+        get contacts_path(format: :json), headers: {
           "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials("operator", "secret")
         }
         assert_response :success

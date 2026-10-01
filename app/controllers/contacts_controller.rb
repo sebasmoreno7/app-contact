@@ -13,6 +13,10 @@ class ContactsController < ApplicationController
   
     # Muestra los detalles de un contacto específico
     def show
+      respond_to do |format|
+        format.html
+        format.json { render json: @contact.as_json(include: { gender: { only: :name }, country: { only: :name }, department: { only: :name }, city: { only: :name } }) }
+      end
     end
   
     # Muestra el formulario para crear un nuevo contacto
