@@ -1,0 +1,15 @@
+<h1><%= @contact.name %> <%= @contact.lastname %></h1>
+
+<dl>
+  <dt>Fecha de nacimiento</dt><dd><%= @contact.birth_date %></dd>
+  <dt>Género</dt><dd><%= @contact.gender.name %></dd>
+  <dt>País</dt><dd><%= @contact.country.name %></dd>
+  <dt>Departamento</dt><dd><%= @contact.department.name %></dd>
+  <dt>Ciudad</dt><dd><%= @contact.city.name %></dd>
+  <dt>Email</dt><dd><%= @contact.email %></dd>
+  <dt>Dirección</dt><dd><%= @contact.address %></dd>
+  <dt>Casa/apartamento</dt><dd><%= @contact.house %></dd>
+  <dt>Descripción</dt><dd><%= @contact.description %></dd>
+</dl>
+
+<%= link_to "Volver a contactos", contacts_path, class: "btn btn-primary" %>
