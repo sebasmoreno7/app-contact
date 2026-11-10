@@ -1,10 +1,21 @@
+## Security update (November 2026)
+
+The dependency lockfile now requires Rails 8.1.4.1 and Rack 3.2.8, together with
+patched Addressable, Crass and SQLite3 gems. Ruby is 3.4.12. The existing tests,
+IP-spoofing regression tests, production asset build and bundler-audit pass.
+
+For deployments, the reverse proxy must remove or overwrite client-supplied
+`Forwarded` headers and set a trustworthy `X-Forwarded-For`. The Rails patch
+checks contradictory headers; it cannot repair an incorrectly configured proxy.
+See https://github.com/rails/rails/security/advisories/GHSA-2gff-2mmg-m73p.
+
 # App Contact · Rails contact manager
 
 This app manages contact details and exports them as PDF. It contains personal data and is not confirmed to have a live deployment.
 
 ## Local development
 
-- Ruby 3.4.2, Bundler, and SQLite
+- Ruby 3.4.12, Bundler, and SQLite
 - Rails 8.1.4, Propshaft, and Importmap
 - `bundle install`
 - `RAILS_ENV=test bin/rails db:prepare && bin/rails test`
